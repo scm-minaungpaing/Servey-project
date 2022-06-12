@@ -9,11 +9,47 @@
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
         Sign in to your account
       </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
-          <router-link :to="{name: 'Register'}" class="font-medium text-indigo-600 hover:text-indigo-500"> Register for free </router-link>
-        </p>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        <router-link
+          :to="{ name: 'Register' }"
+          class="font-medium text-indigo-600 hover:text-indigo-500"
+        >
+          Register for free
+        </router-link>
+      </p>
     </div>
-    <form class="mt-8 space-y-6" action="#" method="POST">
+    <form class="mt-8 space-y-6" @submit="login" method="POST">
+      <div
+        v-if="errorMessage"
+        class="
+          flex
+          items-center
+          justify-between
+          py-3
+          px-5
+          bg-red-500
+          text-white
+          rounded
+        "
+      >
+        {{ errorMessage }}
+        <span @click="errorMessage = ''" class="w-8 h-8 flex items-center justify-center rounded-full transiton-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </span>
+      </div>
       <input type="hidden" name="remember" value="true" />
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
@@ -43,6 +79,7 @@
               sm:text-sm
             "
             placeholder="Email address"
+            v-model="user.email"
           />
         </div>
         <div>
@@ -72,6 +109,7 @@
               sm:text-sm
             "
             placeholder="Password"
+            v-model="user.password"
           />
         </div>
       </div>
@@ -90,6 +128,7 @@
               border-gray-300
               rounded
             "
+            v-model="user.remember"
           />
           <label for="remember-me" class="ml-2 block text-sm text-gray-900">
             Remember me
@@ -142,4 +181,30 @@
 
 <script setup>
 import { LockClosedIcon } from "@heroicons/vue/solid";
+import store from "../store";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+
+const router = useRouter();
+const user = {
+  email: "",
+  password: "",
+  remember: false,
+};
+const errorMessage = ref("");
+
+function login(ev) {
+  ev.preventDefault();
+
+  store
+    .dispatch("login", user)
+    .then(() => {
+      router.push({
+        name: "Dashboard",
+      });
+    })
+    .catch((err) => {
+      errorMessage.value = err.response.data.error;
+    });
+}
 </script>

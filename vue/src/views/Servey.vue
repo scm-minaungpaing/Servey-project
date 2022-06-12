@@ -1,5 +1,11 @@
 <template>
-  <PageComponent title="Servey"> Content goes here!</PageComponent>
+  <PageComponent>
+    <template v-slot:header>
+        <div class="flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-gray-900">Serveys</h1>
+        </div>
+    </template>
+  </PageComponent>
 </template>
 
 <script setup>
