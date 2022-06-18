@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Dashboard from '../views/Dashboard.vue'
-import Servey from '../views/Servey.vue'
+import Survey from '../views/Survey.vue'
+import SurveyView from '../views/SurveyView.vue'
 import DefaultLayout from '../components/DefaultLayout.vue'
 import AuthLayout from '../components/AuthLayout.vue'
 import store from "../store";
@@ -20,10 +21,20 @@ const routes = [
                 component: Dashboard
             },
             {
-                path: '/servey',
-                name: 'Servey',
-                component: Servey
+                path: '/survey',
+                name: 'Survey',
+                component: Survey
             },
+            {
+                path: '/survey/create',
+                name: 'SurveyCreate',
+                component: SurveyView,
+            },
+            {
+                path: '/survey/:id',
+                name: 'SurveyView',
+                component: SurveyView
+            }
         ]
     },
     {

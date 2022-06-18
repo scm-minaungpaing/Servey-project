@@ -192,7 +192,7 @@ import { computed } from "@vue/runtime-core";
 
 const navigation = [
   { name: "Dashboard", to: { name: "Dashboard" }, current: true },
-  { name: "Servey", to: { name: "Servey" }, current: false },
+  { name: "Survey", to: { name: "Survey" }, current: false },
 ];
 
 export default {
